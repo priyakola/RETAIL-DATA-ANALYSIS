@@ -1,0 +1,46 @@
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.apache.hadoop.hive.ql.exec.UDF;
+import org.apache.hadoop.hive.ql.exec.Description;
+import org.apache.hadoop.io.Text;
+import java.text.SimpleDateFormat;
+
+public class myudf_mnth extends UDF {
+
+    public int evaluate(Text s) throws ParseException {
+    	 Text result = new Text();
+         int  day;
+         String app;
+    	 
+		
+		    
+		    	SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		    	String dateInString = s.toString();
+		    	Date date = formatter.parse(dateInString);
+		    	Calendar c = Calendar.getInstance();
+		    	c.setTime(date);
+		    	int dayOfWeek = c.get(Calendar.MONTH)+1;
+		        result.set(formatter.format(date));
+		        
+		        
+		        return dayOfWeek ;
+			
+		
+		   
+    
+		
+		
+    }
+}
+
+
+
+
+
+
+

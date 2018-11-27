@@ -1,0 +1,6 @@
+in = load 'hdfs://quickstart.cloudera:8020/user/indemand_final' as (pro_name:chararray, bill_month: int);
+gp = group in by (bill_month,pro_name);
+indemand_pro = foreach gp generate group.pro_name as product_name, group.bill_month as month_1,COUNT(in) as total_count;
+filt = filter indemand_pro  by total_count > 100;
+store filt into 'indemand_final_output'  using PigStorage(',');
+

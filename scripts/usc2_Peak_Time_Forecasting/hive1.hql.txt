@@ -1,0 +1,35 @@
+create database db_pro7;
+use db_pro7;
+create table tab6(cust_id string, date string, time string, am_pm string) row format delimited fields terminated by ',';
+
+load data local inpath '/home/cloudera/pigout_11111' into table tab6;
+
+Add jar /home/cloudera/workspace/mytrimjar.jar/;
+
+create temporary function TRIM as 'mytrim';
+
+create table tab7(cust_id int,date string, time string,am_pm string);insert into table tab7 select TRIM(cust_id),date,time,am_pm from tab6;create table tab_91011(date1 string,no_cust int);
+
+insert into table tab_91011 select date,COUNT(cust_id) as ct from tab7 where time like '9%' OR time like '10%' OR time like '11%' AND am_pm like 'AM' group by date;
+
+create table tab_121314(date1 string,no_cust int);
+
+insert into table tab_121314 select date, COUNT(cust_id) as ct from tab7 where time like '12%' OR time like '1%' OR time like '2%' AND am_pm like 'PM' group by date;
+
+create table tab_151617(date1 string,no_cust int);
+
+
+insert into table tab_151617 select date, COUNT(cust_id) as ct from tab7 where time like '3%' OR time like '4%' OR time like '5%' AND am_pm like 'PM' group by date; 
+
+create table tab_181920(date1 string,no_cust int);
+
+
+insert into table tab_181920 select date, COUNT(cust_id) as ct from tab7 where time like '6%' OR time like '7%' OR time like '8%' AND am_pm like 'PM' group by date; 
+
+create table tab_night(date1 string,no_of_cust int);
+
+insert into tab_night select date, COUNT(cust_id) from tab7 where time like '9%' AND am_pm like 'PM' group by date;
+
+Create table tab9(date1 string,9AM_11AM int,12PM_2PM int,3PM_5PM int,6PM_9PM int,Night int); 
+
+insert into table tab9 select t1.date1,t1.no_cust,t2.no_cust,t3.no_cust,t4.no_cust,t5.no_of_cust from tab_91011 t1 JOIN tab_121314 t2 on (t1.date1=t2.date1) JOIN tab_151617 t3 on (t3.date1=t2.date1) JOIN tab_181920 t4 on (t4.date1=t3.date1) JOIN tab_night t5 on (t5.date1=t4.date1);

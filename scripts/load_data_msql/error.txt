@@ -1,0 +1,146 @@
+[cloudera@quickstart sqoop]$ sqoop import --connect jdbc:mysql://localhost:3306/mainproject -username root -P --table header -target-dir /user/cloudera/header_final_ds -m1
+18/01/19 08:38:57 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.10.0
+Enter password: 
+18/01/19 08:39:03 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+18/01/19 08:39:03 INFO tool.CodeGenTool: Beginning code generation
+18/01/19 08:39:04 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `header` AS t LIMIT 1
+18/01/19 08:39:04 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `header` AS t LIMIT 1
+18/01/19 08:39:04 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-cloudera/compile/5988bac4b7a592727884564ff90bbff5/header.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+18/01/19 08:39:06 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-cloudera/compile/5988bac4b7a592727884564ff90bbff5/header.jar
+18/01/19 08:39:06 WARN manager.MySQLManager: It looks like you are importing from mysql.
+18/01/19 08:39:06 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+18/01/19 08:39:06 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+18/01/19 08:39:06 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+18/01/19 08:39:06 INFO mapreduce.ImportJobBase: Beginning import of header
+18/01/19 08:39:06 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+18/01/19 08:39:07 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+18/01/19 08:39:08 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+18/01/19 08:39:08 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+18/01/19 08:39:09 INFO mapreduce.JobSubmitter: Cleaning up the staging area /tmp/hadoop-yarn/staging/cloudera/.staging/job_1516371633283_0005
+18/01/19 08:39:09 WARN security.UserGroupInformation: PriviledgedActionException as:cloudera (auth:SIMPLE) cause:org.apache.hadoop.security.AccessControlException: Permission denied: user=cloudera, access=EXECUTE, inode="/tmp/hadoop-yarn":mapred:supergroup:drwxrwx---
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkFsPermission(DefaultAuthorizationProvider.java:279)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:260)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkTraverse(DefaultAuthorizationProvider.java:201)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkPermission(DefaultAuthorizationProvider.java:154)
+	at org.apache.hadoop.hdfs.server.namenode.FSPermissionChecker.checkPermission(FSPermissionChecker.java:152)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3529)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3512)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkOwner(FSDirectory.java:3477)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.checkOwner(FSNamesystem.java:6566)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.setPermissionInt(FSNamesystem.java:1807)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.setPermission(FSNamesystem.java:1787)
+	at org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer.setPermission(NameNodeRpcServer.java:654)
+	at org.apache.hadoop.hdfs.server.namenode.AuthorizationProviderProxyClientProtocol.setPermission(AuthorizationProviderProxyClientProtocol.java:174)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolServerSideTranslatorPB.setPermission(ClientNamenodeProtocolServerSideTranslatorPB.java:454)
+	at org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos$ClientNamenodeProtocol$2.callBlockingMethod(ClientNamenodeProtocolProtos.java)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Server$ProtoBufRpcInvoker.call(ProtobufRpcEngine.java:617)
+	at org.apache.hadoop.ipc.RPC$Server.call(RPC.java:1073)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2216)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2212)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1796)
+	at org.apache.hadoop.ipc.Server$Handler.run(Server.java:2210)
+
+18/01/19 08:39:09 ERROR tool.ImportTool: Encountered IOException running import job: org.apache.hadoop.security.AccessControlException: Permission denied: user=cloudera, access=EXECUTE, inode="/tmp/hadoop-yarn":mapred:supergroup:drwxrwx---
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkFsPermission(DefaultAuthorizationProvider.java:279)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:260)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkTraverse(DefaultAuthorizationProvider.java:201)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkPermission(DefaultAuthorizationProvider.java:154)
+	at org.apache.hadoop.hdfs.server.namenode.FSPermissionChecker.checkPermission(FSPermissionChecker.java:152)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3529)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3512)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkOwner(FSDirectory.java:3477)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.checkOwner(FSNamesystem.java:6566)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.setPermissionInt(FSNamesystem.java:1807)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.setPermission(FSNamesystem.java:1787)
+	at org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer.setPermission(NameNodeRpcServer.java:654)
+	at org.apache.hadoop.hdfs.server.namenode.AuthorizationProviderProxyClientProtocol.setPermission(AuthorizationProviderProxyClientProtocol.java:174)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolServerSideTranslatorPB.setPermission(ClientNamenodeProtocolServerSideTranslatorPB.java:454)
+	at org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos$ClientNamenodeProtocol$2.callBlockingMethod(ClientNamenodeProtocolProtos.java)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Server$ProtoBufRpcInvoker.call(ProtobufRpcEngine.java:617)
+	at org.apache.hadoop.ipc.RPC$Server.call(RPC.java:1073)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2216)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2212)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1796)
+	at org.apache.hadoop.ipc.Server$Handler.run(Server.java:2210)
+
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at org.apache.hadoop.ipc.RemoteException.instantiateException(RemoteException.java:106)
+	at org.apache.hadoop.ipc.RemoteException.unwrapRemoteException(RemoteException.java:73)
+	at org.apache.hadoop.hdfs.DFSClient.setPermission(DFSClient.java:2479)
+	at org.apache.hadoop.hdfs.DistributedFileSystem$26.doCall(DistributedFileSystem.java:1428)
+	at org.apache.hadoop.hdfs.DistributedFileSystem$26.doCall(DistributedFileSystem.java:1424)
+	at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)
+	at org.apache.hadoop.hdfs.DistributedFileSystem.setPermission(DistributedFileSystem.java:1424)
+	at org.apache.hadoop.fs.FileSystem.mkdirs(FileSystem.java:616)
+	at org.apache.hadoop.mapreduce.JobResourceUploader.uploadFiles(JobResourceUploader.java:94)
+	at org.apache.hadoop.mapreduce.JobSubmitter.copyAndConfigureFiles(JobSubmitter.java:99)
+	at org.apache.hadoop.mapreduce.JobSubmitter.submitJobInternal(JobSubmitter.java:194)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1307)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1304)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1796)
+	at org.apache.hadoop.mapreduce.Job.submit(Job.java:1304)
+	at org.apache.hadoop.mapreduce.Job.waitForCompletion(Job.java:1325)
+	at org.apache.sqoop.mapreduce.ImportJobBase.doSubmitJob(ImportJobBase.java:203)
+	at org.apache.sqoop.mapreduce.ImportJobBase.runJob(ImportJobBase.java:176)
+	at org.apache.sqoop.mapreduce.ImportJobBase.runImport(ImportJobBase.java:273)
+	at org.apache.sqoop.manager.SqlManager.importTable(SqlManager.java:692)
+	at org.apache.sqoop.manager.MySQLManager.importTable(MySQLManager.java:127)
+	at org.apache.sqoop.tool.ImportTool.importTable(ImportTool.java:507)
+	at org.apache.sqoop.tool.ImportTool.run(ImportTool.java:615)
+	at org.apache.sqoop.Sqoop.run(Sqoop.java:143)
+	at org.apache.hadoop.util.ToolRunner.run(ToolRunner.java:70)
+	at org.apache.sqoop.Sqoop.runSqoop(Sqoop.java:179)
+	at org.apache.sqoop.Sqoop.runTool(Sqoop.java:218)
+	at org.apache.sqoop.Sqoop.runTool(Sqoop.java:227)
+	at org.apache.sqoop.Sqoop.main(Sqoop.java:236)
+Caused by: org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.security.AccessControlException): Permission denied: user=cloudera, access=EXECUTE, inode="/tmp/hadoop-yarn":mapred:supergroup:drwxrwx---
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkFsPermission(DefaultAuthorizationProvider.java:279)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:260)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkTraverse(DefaultAuthorizationProvider.java:201)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkPermission(DefaultAuthorizationProvider.java:154)
+	at org.apache.hadoop.hdfs.server.namenode.FSPermissionChecker.checkPermission(FSPermissionChecker.java:152)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3529)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3512)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkOwner(FSDirectory.java:3477)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.checkOwner(FSNamesystem.java:6566)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.setPermissionInt(FSNamesystem.java:1807)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.setPermission(FSNamesystem.java:1787)
+	at org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer.setPermission(NameNodeRpcServer.java:654)
+	at org.apache.hadoop.hdfs.server.namenode.AuthorizationProviderProxyClientProtocol.setPermission(AuthorizationProviderProxyClientProtocol.java:174)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolServerSideTranslatorPB.setPermission(ClientNamenodeProtocolServerSideTranslatorPB.java:454)
+	at org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos$ClientNamenodeProtocol$2.callBlockingMethod(ClientNamenodeProtocolProtos.java)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Server$ProtoBufRpcInvoker.call(ProtobufRpcEngine.java:617)
+	at org.apache.hadoop.ipc.RPC$Server.call(RPC.java:1073)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2216)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2212)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1796)
+	at org.apache.hadoop.ipc.Server$Handler.run(Server.java:2210)
+
+	at org.apache.hadoop.ipc.Client.call(Client.java:1472)
+	at org.apache.hadoop.ipc.Client.call(Client.java:1409)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:230)
+	at com.sun.proxy.$Proxy17.setPermission(Unknown Source)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolTranslatorPB.setPermission(ClientNamenodeProtocolTranslatorPB.java:355)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.io.retry.RetryInvocationHandler.invokeMethod(RetryInvocationHandler.java:256)
+	at org.apache.hadoop.io.retry.RetryInvocationHandler.invoke(RetryInvocationHandler.java:104)
+	at com.sun.proxy.$Proxy18.setPermission(Unknown Source)
+	at org.apache.hadoop.hdfs.DFSClient.setPermission(DFSClient.java:2477)
+	... 28 more
+

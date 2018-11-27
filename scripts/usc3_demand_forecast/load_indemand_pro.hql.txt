@@ -1,0 +1,20 @@
+create database indemand_hive;
+
+use indemand_hive;
+
+create table indemand(
+invD_icode int,
+invD_pro_icode	int,
+invD_pro_name	string,
+invD_qty int,
+invD_InvH_date string
+) row format delimited fields terminated by ',';
+
+load data inpath 'hdfs://quickstart.cloudera:8020/user/cloudera/indemand_products' into table indemand;
+
+add jar /home/cloudera/Desktop/Month1.jar;
+
+create temporary function myudf_mnth as 'myudf_mnth';
+
+create table indemand_final as
+select invD_icode, invD_pro_icode,invD_pro_name,invD_qty, myudf_mnth(invD_InvH_date) from indemand;

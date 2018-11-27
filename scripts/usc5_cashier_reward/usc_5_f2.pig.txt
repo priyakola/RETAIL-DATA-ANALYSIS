@@ -1,0 +1,11 @@
+in2 = load 'mydate/p*' using PigStorage(',') as (username:chararray, date_1:chararray);
+
+date_split = foreach in2 generate username, STRSPLIT($1,'\\/') as day_split;date_gen = foreach date_split generate username, FLATTEN(day_split) as (month_1:int , day_1:int, year_1:int);
+
+res1 = foreach date_gen generate username, month_1;
+
+filt_4 =  group res1 by (month_1,username);
+
+filt_5 = foreach filt_4 generate group.month_1 as month_1,group.username as username, COUNT(res1) as billing_count;
+
+store filt_5 into 'cashier_final_output' using PigStorage(',');

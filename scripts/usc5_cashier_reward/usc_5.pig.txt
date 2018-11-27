@@ -1,0 +1,6 @@
+inn = load 'header_final_ds';
+usc_5 = foreach inn generate $5 as username,  STRSPLIT($2,' ') as time_split;
+day_time_split= FOREACH usc_5 GENERATE username, FLATTEN(time_split) as (dummy,date_1,time_1,am_pm); 
+res = foreach day_time_split generate username, date_1;
+store res into 'mydate' using PigStorage(',');
+

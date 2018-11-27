@@ -1,0 +1,4 @@
+Steps:
+Execute Code in the following order:
+1. pig1.pig
+2. Create a java project and run java files.

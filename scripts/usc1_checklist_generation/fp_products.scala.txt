@@ -1,0 +1,11 @@
+import org.apache.spark.mllib.fpm.FPGrowth
+
+val transactions = sc.textFile("hdfs://quickstart.cloudera:8020/user/cloudera/usecase_1/p*").map(_.split(",")).cache()
+
+
+val model = new FPGrowth().setMinSupport(0.5).setNumPartitions(10).run(transactions)
+
+
+model.freqItemsets.collect().foreach { itemset =>
+  println(itemset.items.mkString("[", ",", "]") + ", " + itemset.freq)
+}

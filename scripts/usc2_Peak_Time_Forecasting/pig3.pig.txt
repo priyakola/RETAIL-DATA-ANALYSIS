@@ -1,0 +1,3 @@
+A = load 'peaktime_date1/part-m-00000' using PigStorage(',');
+B = foreach A generate $0 as cust_id:int,$2 as bill_date:chararray,$3 as time:chararray,$4 as am_pm:chararray;
+store B into 'pigout_11111' using PigStorage(',');

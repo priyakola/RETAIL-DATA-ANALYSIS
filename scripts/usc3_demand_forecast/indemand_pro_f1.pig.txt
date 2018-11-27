@@ -1,0 +1,10 @@
+inn = load 'detail_part1';
+
+usc_2 = foreach inn generate $0 as invD_icode, $1 as invD_InvH_icode,$2 as  invD_InvH_No, STRSPLIT($3,' ') as invD_InvH_date,$4 as  invD_pty_icode, $5 as invD_pro_icode, $6 as invD_pro_ucode, $7 as  invD_pro_name, $8 as invD_qty, $9 as invD_rate, $10 as  invD_amt;
+
+day_time_split= FOREACH usc_2 GENERATE invD_icode,invD_pro_icode,invD_pro_name,invD_qty, FLATTEN(invD_InvH_date ) as (dummy,date_1,time_1,am_pm); 
+
+res = foreach day_time_split generate (int)invD_icode,(int)invD_pro_icode, invD_pro_name, (int)invD_qty, date_1;
+
+store res into 'indemand_products' using PigStorage(',');
+

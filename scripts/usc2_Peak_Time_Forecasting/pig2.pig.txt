@@ -1,0 +1,5 @@
+inn = load 'header_final/part-m-00000';
+usc_5 = foreach inn generate $3 as cust_id,  STRSPLIT($2,' ') as time_split;
+day_time_split= FOREACH usc_5 GENERATE cust_id, FLATTEN(time_split) as (dummy,date_1,time_1,am_pm);
+splt = foreach day_time_split generate date_1, time_1, am_pm, cust_id;
+ store day_time_split into 'peaktime_date1' using PigStorage(',');

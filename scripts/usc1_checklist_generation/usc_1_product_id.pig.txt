@@ -1,0 +1,4 @@
+in = load 'usecase_1_f1' using PigStorage(',')as (id:int, product_name:chararray);gp = group in by id;
+gp1= foreach gp generate group as id,in as product_name;
+fin = foreach gp1 generate FLATTEN(BagToTuple(product_name.product_name)) as products;
+store fin into 'usecase_1' using PigStorage(',');

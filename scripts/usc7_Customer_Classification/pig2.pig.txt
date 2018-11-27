@@ -1,0 +1,3 @@
+A = load 'header_final/part-m-00000' using PigStorage('\t');
+B = foreach A generate $30 as cust_id, $12 as total_bill;
+Store B into 'pigout1' using PigStorage(',');

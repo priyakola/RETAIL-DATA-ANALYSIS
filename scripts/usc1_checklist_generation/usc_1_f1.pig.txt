@@ -1,0 +1,37 @@
+header = load 'header_final_ds' as (InvH_icode	:int, InvH_BillNo:int,InvH_Billdate:chararray,InvH_pty_icode:int,InvH_counter:int,InvH_username:chararray,InvH_optdisSameDiff:chararray,InvH_disper:int,InvH_pymtmode:chararray	,InvH_pymtmodedet:float,InvH_basamt:float,InvH_lessdisamt:float,InvH_billnett:float,InvH_scstchr:float,InvH_roff:float,InvH_collamt:float,InvH_cashrecd:float,InvH_cashret:float,InvH_bank_icode:int,InvH_cou_type_icode:int,InvH_cheNo:int, InvH_cheDate:chararray,InvH_cheAmt:float,InvH_cashpaidAmt:float,InvH_crecardno:int,InvH_crecardAmt:float,InvH_denom_total:float,InvH_CancelFlag:int,InvH_prilcust_icode:int,fin_yr:int,usr_icode:int,comp_icode:int,ser_date:int);
+
+
+detail = load 'detail_final_ds' as (invD_icode:int,invD_InvH_icode:int,invD_InvH_No:int,invD_InvH_date:chararray,invD_pty_icode:int,invD_pro_icode:int,invD_pro_ucode:int,invD_pro_name:chararray,invD_qty:int,invD_rate:float,invD_amt:float,invD_disc_amt:float,invD_disc_per:int,InvD_tax_type_icode:float,invD_taxDet_name:chararray,invD_taxDet_icode:float,invD_taxdet_per:int,invD_taxdet_amt:float,invD_surchr_name:chararray,invD_surchr_icode:int,invD_surchr_per:int,invD_surchr_amt:float,invD_bill_stkupd:chararray,invD_CancelFlag:chararray,fin_yr:int,comp_icode:int,ser_date:int, InvD_rf_qty:int);
+
+
+joined = join header by InvH_icode,detail by invD_InvH_icode;
+
+store joined into 'complete_ds' using PigStorage(',');
+
+fil = foreach joined generate  InvH_icode,InvH_pty_icode,invD_pro_icode,invD_pro_name;
+
+fil2 = foreach fil generate InvH_icode,invD_pro_name;
+
+store fil2 into 'usecase_1_f1' using PigStorage(',');
+
+
+
+
+
+
+fil_order = filter fil by  InvH_pty_icode > 0;
+
+order_final= foreach fil_order generate InvH_pty_icode,InvH_icode,invD_pro_icode,invD_pro_name;
+
+group_cust_item = group order_final by (InvH_pty_icode,invD_pro_name);
+
+group_cust_item_cnt = foreach group_cust_item generate group.InvH_pty_icode as shopping_id,group.invD_pro_name as items,COUNT(order_final) as item_count;
+
+grp_cust = group group_cust_item_cnt by shopping_id;
+
+result = foreach grp_cust{ total_orders = SUM(group_cust_item_cnt.item_count);                          
+			   arr_orders = order group_cust_item_cnt by item_count desc;                         
+                           highest_3 = limit arr_orders 3;                        
+                           generate FLATTEN(highest_3),total_orders as total_cnt;}
+
+store result into 'usecase_1_f2' using PigStorage(',');

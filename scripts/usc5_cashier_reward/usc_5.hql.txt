@@ -1,0 +1,18 @@
+create database cashier_reward;
+
+use cashier_reward;
+
+
+create table cash_temp1(username string,month_1 int)row format delimited fields terminated by ',';
+ 
+load data local inpath '/home/cloudera/Desktop/user_month/p*' into table  cash_temp1;
+
+create table cashier_reward(username string)partitioned by (month_1 int);
+
+set hive.exec.dynamic.partition.mode=nonstrict;
+
+insert into table cashier_reward partition(month_1)
+select * from cash_temp1;
+
+
+

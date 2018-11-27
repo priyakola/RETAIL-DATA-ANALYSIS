@@ -1,0 +1,13 @@
+in = load 'header_final_ds';
+usc_4 = foreach in generate $0 as id,$9 as payment_mode;
+filt1 =  group usc_4 by payment_mode;
+cntcash = foreach filt1 generate group ,COUNT(usc_4) as paymode_count_cash;
+store cntcash into 'paymode_data' using PigStorage(',');
+
+
+
+
+in = load 'header_final';
+usc_4 = foreach in generate $0 as InvH_icode,$9 as InvH_pymtmode;
+sep=foreach usc_4 GENERATE (int)InvH_icode,InvH_pymtmode;
+store sep into 'paymt' using PigStorage(',');
